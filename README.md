@@ -52,6 +52,11 @@ AppServer 正是为开发者演示了在用户注册、用户登录时，如何�
 * 服务配置文件参考：[application.properties](./agora-app-server/src/main/resources/application.properties)
 
   ```
+      server.port=8086
+
+      logging.level.com.easemob.im.http=debug
+      logging.level.com.easemob.im.shaded.io.netty=ERROR
+      
       ## 环信console 获取自己的appkey
       application.appkey=xxx
       
@@ -83,7 +88,7 @@ AppServer 正是为开发者演示了在用户注册、用户登录时，如何�
 
 ## 使用
 
-上述准备好，启动服务即可使用。
+上述的配置文件准备准备好，到 AgoraServerApplication 类中启动服务即可使用。
 
 ## API
 

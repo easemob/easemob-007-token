@@ -46,7 +46,7 @@ AppServer 正是为开发者演示了在用户注册、用户登录时，如何�
 
 配置文件中需要的参数来源于"准备"中获取到的环信 appkey、声网 AppId（AppId）、声网 APP证书（AppCert）。
 
-* 服务配置文件参考：[application.properties](./easemob-007-token/src/main/resources/application.properties)
+* 服务配置文件参考：[application.properties](./src/main/resources/application.properties)
 
   ```
       server.port=8086
@@ -81,15 +81,15 @@ AppServer 正是为开发者演示了在用户注册、用户登录时，如何�
       
   ```
 
-* 对 Server SDK 的配置请参考 AppServer 中的 [ApplicationConfig](./easemob-007-token/src/main/java/com/easemob/agora/config/ApplicationConfig)
+* 对 Server SDK 的配置请参考 AppServer 中的 [ApplicationConfig](./src/main/java/com/easemob/agora/config/ApplicationConfig)
 
 ## 数据库
 您需要创建一个数据库以及一张表来存储用户信息，存储的用户信息您可以自己来决定，AppServer 中使用的表数据只是一个参考。
-[DB_SQL](./easemob-007-token/appserver/app_user_info.sql)
+[DB_SQL](./app_user_info.sql)
 
 ## 使用
 
-上述的配置文件准备准备好，到 [AgoraServerApplication](./easemob-007-token/src/main/java/com/easemob/agora/AgoraServerApplication) 类中启动服务即可使用。
+上述的配置文件准备准备好，到 [AgoraServerApplication](./src/main/java/com/easemob/agora/AgoraServerApplication) 类中启动服务即可使用。
 
 ## API
 

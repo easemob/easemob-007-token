@@ -9,6 +9,11 @@ AppServer 是什么？
 AppServer 正是为开发者演示了在用户注册、用户登录时，如何为用户创建环信用户与环信关联以及为用户获取 token 的参考。
 
 * 快速了解AppServer。
+<img width="1093" alt="register" src="https://user-images.githubusercontent.com/15087647/171544887-39f2a52e-0c3d-400c-b764-79977c73054a.png">
+---
+
+<img width="871" alt="login" src="https://user-images.githubusercontent.com/15087647/171544896-080971fd-81aa-42ad-bc30-35e9bf7cb78e.png">
+---
 
 ![DC4314DA-FDF0-408D-B9C3-B666775CC246](https://user-images.githubusercontent.com/15087647/128315691-b69ad985-0642-4041-9361-af119c1480f3.png)
 ---

@@ -9,17 +9,9 @@ AppServer 是什么？
 AppServer 正是为开发者演示了在用户注册、用户登录时，如何为用户创建环信用户与环信关联以及为用户获取 token 的参考。
 
 * 快速了解AppServer。
-<img width="1093" alt="register" src="https://user-images.githubusercontent.com/15087647/171544887-39f2a52e-0c3d-400c-b764-79977c73054a.png">
----
+<img width="871" alt="register" src="https://user-images.githubusercontent.com/15087647/171544887-39f2a52e-0c3d-400c-b764-79977c73054a.png">
 
 <img width="871" alt="login" src="https://user-images.githubusercontent.com/15087647/171544896-080971fd-81aa-42ad-bc30-35e9bf7cb78e.png">
----
-
-![DC4314DA-FDF0-408D-B9C3-B666775CC246](https://user-images.githubusercontent.com/15087647/128315691-b69ad985-0642-4041-9361-af119c1480f3.png)
----
-
-![40A2C15E-3F4E-4141-BD76-F4CC3DF91276](https://user-images.githubusercontent.com/15087647/128316482-bcc2b30c-6dbd-4712-a9a1-b6da1d98036d.png)
----
 
 ## 功能
 
@@ -40,13 +32,13 @@ AppServer 正是为开发者演示了在用户注册、用户登录时，如何�
 
 在获取声网 token 之前，需要准备环信 AppKey、声网 AppId（AppId）、声网 APP证书（AppCert）
 
-* 获取环信 AppKey：
-  - 1.如果您有环信管理后台账号并创建过应用，请先登录环信管理后台，点击[这里](https://console.easemob.com/user/login)，然后到"应用列表" -> 点击"查看"即可获取到appkey。
-  - 2.如果您没有环信管理后台账号，请先注册账号，点击[这里](https://console.easemob.com/user/register)，注册成功后请登录，然后点击"添加应用"，添加成功后点击"查看"即可获取到appkey。
 
-* 获取 AppId、AppCert：
-  - 1.如果您有声网 Console 后台账号并创建过项目，请先登录声网 Console  后台，点击[这里](https://sso.agora.io/cn/login/)，然后到"项目列表" -> 找到自己的项目点击"编辑"图标后，即可看到 App ID、APP 证书。
-  - 2.如果您没有声网Console后台账号，请先注册账号，点击[这里](https://sso.agora.io/cn/v4/signup)，注册成功后按照步骤1操作。
+* 获取 AppId、AppCert、AppKey：
+  - 1.如果您有声网 Console 后台账号并创建过项目，请先登录声网 Console 后台，点击[这里](https://sso.agora.io/cn/login/)，然后到"项目列表" -> 找到自己的项目点击"编辑"图标后，即可看到 App ID、APP 证书。
+  - 2.登录声网 Console 后，找到自己的项目后，按照下面的方式获取 AppKey。
+  - ![appkey](https://user-images.githubusercontent.com/15087647/171545977-e94719d3-a4f5-4628-8fa1-6e8a3d157c37.png)
+
+  - 3.如果您没有声网Console后台账号，请先注册账号，点击[这里](https://sso.agora.io/cn/v4/signup)，注册成功后按照步骤1操作。
 
 * 您需要自己来实现用户登录时的认证、授权由您自己来完成。
 
@@ -54,7 +46,7 @@ AppServer 正是为开发者演示了在用户注册、用户登录时，如何�
 
 配置文件中需要的参数来源于"准备"中获取到的环信 appkey、声网 AppId（AppId）、声网 APP证书（AppCert）。
 
-* 服务配置文件参考：[application.properties](./agora-app-server/src/main/resources/application.properties)
+* 服务配置文件参考：[application.properties](./easemob-007-token/src/main/resources/application.properties)
 
   ```
       server.port=8086
@@ -89,11 +81,15 @@ AppServer 正是为开发者演示了在用户注册、用户登录时，如何�
       
   ```
 
-* 对 Server SDK 的配置请参考 AppServer 中的 "ApplicationConfig"
+* 对 Server SDK 的配置请参考 AppServer 中的 [ApplicationConfig](./easemob-007-token/src/main/java/com/easemob/agora/config/ApplicationConfig)
+
+## 数据库
+您需要创建一个数据库以及一张表来存储用户信息，存储的用户信息您可以自己来决定，AppServer 中使用的表数据只是一个参考。
+[DB_SQL](./easemob-007-token/app_user_info.sql)
 
 ## 使用
 
-上述的配置文件准备准备好，到 AgoraServerApplication 类中启动服务即可使用。
+上述的配置文件准备准备好，到 [AgoraServerApplication](./easemob-007-token/src/main/java/com/easemob/agora/AgoraServerApplication) 类中启动服务即可使用。
 
 ## API
 

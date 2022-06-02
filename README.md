@@ -81,7 +81,7 @@ AppServer 正是为开发者演示了在用户注册、用户登录时，如何�
       
   ```
 
-* 对 Server SDK 的配置请参考 AppServer 中的 [ApplicationConfig](./src/main/java/com/easemob/agora/config/ApplicationConfig)
+* 对 Server SDK 的配置请参考 AppServer 中的 [ApplicationConfig](./src/main/java/com/easemob/agora/config/ApplicationConfig.java)
 
 ## 数据库
 您需要创建一个数据库以及一张表来存储用户信息，存储的用户信息您可以自己来决定，AppServer 中使用的表数据只是一个参考。
@@ -89,7 +89,7 @@ AppServer 正是为开发者演示了在用户注册、用户登录时，如何�
 
 ## 使用
 
-上述的配置文件准备准备好，到 [AgoraServerApplication](./src/main/java/com/easemob/agora/AgoraServerApplication) 类中启动服务即可使用。
+上述的配置文件准备准备好，到 [AgoraServerApplication](./src/main/java/com/easemob/agora/AgoraServerApplication.java) 类中启动服务即可使用。
 
 ## API
 

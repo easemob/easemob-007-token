@@ -85,7 +85,7 @@ AppServer 正是为开发者演示了在用户注册、用户登录时，如何�
 
 ## 数据库
 您需要创建一个数据库以及一张表来存储用户信息，存储的用户信息您可以自己来决定，AppServer 中使用的表数据只是一个参考。
-[DB_SQL](./easemob-007-token/app_user_info.sql)
+[DB_SQL](./easemob-007-token/appserver/app_user_info.sql)
 
 ## 使用
 

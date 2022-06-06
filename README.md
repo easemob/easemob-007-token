@@ -77,7 +77,7 @@ Configure the below file with appkey, AppId and AppCert you get from the above s
       
   ```
 
-* Update config params in "ApplicationConfig" file.
+* Update config params in [ApplicationConfig](./src/main/java/com/easemob/agora/config/ApplicationConfig.java) file.
 
 ## Run
 

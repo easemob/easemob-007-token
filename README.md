@@ -141,16 +141,30 @@ curl -X POST -H 'Content-Type: application/json' 'http://localhost:8080/app/user
 
 User login on your app server and get a agora token for chat service.
 
-**Path:** `http://localhost:8080/app/user/login/{userAccount}`
-
-You need setup {userAccount} value in your url.
+**Path:** `http://localhost:8080/app/user/login`
 
 **HTTP Method:** `POST`
+
+**Request Headers:** 
+
+| Param        | description      |
+| ------------ | ---------------- |
+| Content-Type | application/json |
+
+**Request Body example:** 
+{"userAccount":"jack", "userPassword":"123"}
+
+**Request Body params:** 
+
+| Param        | Data Type | description   |
+| ------------ | --------- | ------------- |
+| userAccount  | String    | user account  |
+| userPassword | String    | user password |
 
 **request example:**
 
 ```
-curl -X POST 'http://localhost:8080/app/user/login/jack'
+curl -X POST -H 'Content-Type: application/json' 'http://localhost:8080/app/user/login' -d '{"userAccount": "jack","userPassword":"123"}'
 ```
 
 **Response Parameters:**

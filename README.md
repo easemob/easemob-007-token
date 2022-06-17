@@ -122,16 +122,12 @@ curl -X POST -H 'Content-Type: application/json' 'http://localhost:8080/app/user
 | Param           | Data Type | description          |
 | --------------- | --------- | -------------------- |
 | code            | String    | response status code |
-| easemobUserName | String    | chat user id         |
-| agoraUid        | Integer   | agora uid            |
 
 **response example:**
 
 ```json
 {
-    "code": "RES_OK",
-    "easemobUserName": "em1792190072",
-    "agoraUid": "1792190072"
+    "code": "RES_OK"
 }
 ```
 

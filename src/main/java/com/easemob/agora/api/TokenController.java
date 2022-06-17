@@ -21,16 +21,6 @@ public class TokenController {
         this.tokenService = tokenService;
     }
 
-    @GetMapping("app/token")
-    public ResponseEntity getAppToken() {
-        ResponseParam responseParam = new ResponseParam();
-        TokenInfo token = tokenService.getAppToken();
-        responseParam.setAccessToken(token.getToken());
-        responseParam.setExpireTimestamp(token.getExpireTimestamp());
-
-        return ResponseEntity.ok(responseParam);
-    }
-
     @GetMapping("/agora/rtc/token")
     public ResponseEntity getAgoraRtcToken(@RequestParam String channelName,
                                           @RequestParam Integer agoraUid) {

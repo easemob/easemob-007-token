@@ -8,7 +8,7 @@ When you plan to use agora chat service, you may need mapping your user profile 
 
 * workflow for create account
 
-<img width="871" alt="image" src="https://user-images.githubusercontent.com/15087647/174726289-41104a00-69a2-4944-9f86-b37365f51ff6.png">
+<img width="871" alt="image" src="https://user-images.githubusercontent.com/15087647/174737679-d9e71eb2-d63c-4fbb-a545-33a022466333.png">
 
 ---
 

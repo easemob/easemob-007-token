@@ -14,7 +14,7 @@ When you plan to use agora chat service, you may need mapping your user profile 
 
 * workflow for login
 
-<img width="871" alt="login" src="https://user-images.githubusercontent.com/15087647/171544896-080971fd-81aa-42ad-bc30-35e9bf7cb78e.png">
+<img width="871" alt="image" src="https://user-images.githubusercontent.com/15087647/174742784-e2546fd8-60f9-491f-bc32-54f19a37a0a2.png">
 
 
 ## Features

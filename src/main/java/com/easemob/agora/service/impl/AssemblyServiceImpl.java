@@ -25,20 +25,10 @@ public class AssemblyServiceImpl implements AssemblyService {
     @Override
     public void registerUserAccount(String userAccount, String userPassword) {
         String agoraUid = generateUniqueAgoraUid();
-        String chatUserName = CHAT_USER_NAME_PREFIX + agoraUid;
 
-        while (true) {
-            if (this.serverSDKService.checkIfChatUserNameExists(chatUserName)) {
-                agoraUid = generateUniqueAgoraUid();
-                chatUserName = CHAT_USER_NAME_PREFIX + agoraUid;
-            } else {
-                break;
-            }
-        }
+        this.serverSDKService.registerChatUserName(userAccount, userPassword);
 
-        this.serverSDKService.registerChatUserName(chatUserName);
-
-        saveAppUserToDB(userAccount, userPassword, chatUserName, agoraUid);
+        saveAppUserToDB(userAccount, userPassword, userAccount, agoraUid);
     }
 
     @Override
@@ -86,36 +76,4 @@ public class AssemblyServiceImpl implements AssemblyService {
         log.info("userAccount info save to db successfully :{}", userAccount);
     }
 
-    @Override
-    public AppUserInfo checkAppUserInfo(AppUserInfo appUserInfo) {
-        String userAccount = appUserInfo.getUserAccount();
-        String chatUserName = appUserInfo.getChatUserName();
-        String agoraUid = appUserInfo.getAgoraUid();
-
-        if (Strings.isNotBlank(chatUserName) && Strings.isNotBlank(agoraUid)) {
-            if (!this.serverSDKService.checkIfChatUserNameExists(chatUserName)) {
-                this.serverSDKService.registerChatUserName(chatUserName);
-            }
-        } else {
-            if (Strings.isBlank(agoraUid)) {
-                agoraUid = generateUniqueAgoraUid();
-            }
-
-            if (Strings.isBlank(chatUserName)) {
-                chatUserName = CHAT_USER_NAME_PREFIX + agoraUid;
-                if (!this.serverSDKService.checkIfChatUserNameExists(chatUserName)) {
-                    this.serverSDKService.registerChatUserName(chatUserName);
-                }
-            }
-
-            appUserInfo.setChatUserName(chatUserName);
-            appUserInfo.setAgoraUid(agoraUid);
-
-            this.appUserInfoRepository.save(appUserInfo);
-
-            log.info("appUserInfo update to db successfully : {}, {}, {}", userAccount, chatUserName, agoraUid);
-        }
-
-        return appUserInfo;
-    }
 }

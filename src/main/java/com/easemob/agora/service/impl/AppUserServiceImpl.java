@@ -22,9 +22,6 @@ public class AppUserServiceImpl implements AppUserService {
     @Autowired
     private AssemblyService assemblyService;
 
-    @Autowired
-    private ServerSDKService sdkService;
-
     @Override
     public void registerUser(AppUser appUser) {
         String userAccount = appUser.getUserAccount();
@@ -47,7 +44,7 @@ public class AppUserServiceImpl implements AppUserService {
                 throw new ASPasswordErrorException("user password error");
             }
         } else {
-            throw new ASNotFoundException("chatUserName " + userAccount + " does not exists");
+            throw new ASNotFoundException(userAccount + " does not exists");
         }
 
         return this.tokenService.getUserTokenWithAccount(userAccount);

@@ -27,12 +27,12 @@ public class ServerSDKServiceImpl implements ServerSDKService {
     private EMService serverSdk;
 
     @Override
-    public void registerChatUserName(String chatUserName) {
+    public void registerChatUserName(String chatUserName, String password) {
         try {
-            this.serverSdk.user().create(chatUserName, EASEMOB_USER_PASSWORD).block();
-            log.info("register chatUserName success :{}", chatUserName);
+            this.serverSdk.user().create(chatUserName, password).block();
+            log.info("register chatUserName success : {}", chatUserName);
         } catch (EMException e) {
-            throw new ASRegisterChatUserNameException(String.format("register chatUserName %s fail. Message : %s", chatUserName ,e.getMessage()));
+            log.error("register chatUserName fail. chatUserName : {}, e : {}", chatUserName, e.getMessage());
         }
     }
 
@@ -53,7 +53,7 @@ public class ServerSDKServiceImpl implements ServerSDKService {
     }
 
     @Override
-    public String getChatUserId(String chatUserName) {
+    public String getChatUserUuid(String chatUserName) {
         EMUser user;
 
         try {

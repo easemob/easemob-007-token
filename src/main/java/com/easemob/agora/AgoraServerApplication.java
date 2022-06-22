@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @EnableJpaRepositories
 @EntityScan("com.easemob.agora.model")
-@SpringBootApplication(scanBasePackages = "com.easemob")
+@SpringBootApplication(scanBasePackages = "com.easemob.agora")
 public class AgoraServerApplication {
 
     public static void main(String[] args) {

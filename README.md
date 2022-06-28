@@ -180,7 +180,6 @@ curl -X POST -H 'Content-Type: application/json' 'http://localhost:8080/app/user
     "code": "RES_OK",
     "accessToken": "xxx",
     "expireTimestamp": 1628245967857,
-    "easemobUserName": "em1792190072",
-    "agoraUid": "1792190072"
+    "easemobUserName": "em1792190072"
 }
 ```

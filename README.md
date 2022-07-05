@@ -31,7 +31,7 @@ This project developed based on Spring Boot.
 
 ## Component
 
-* [Server SDK](https://docs-im.easemob.com/ccim/rest/javaserversdk#java_server_sdk)
+* [AgoraTools]([https://docs-im.easemob.com/ccim/rest/javaserversdk#java_server_sdk](https://github.com/AgoraIO/Tools/tree/dev/accesstoken2/DynamicKey/AgoraDynamicKey/java/src/main/java/io/agora))
 * MySQL
 
 ## Prepare

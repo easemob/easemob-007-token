@@ -8,13 +8,13 @@ When you plan to use agora chat service, you may need mapping your user profile 
 
 * workflow for create account
 
-<img width="871" alt="image" src="https://user-images.githubusercontent.com/15087647/174737679-d9e71eb2-d63c-4fbb-a545-33a022466333.png">
+![register](https://user-images.githubusercontent.com/15087647/177251615-e13e8848-10a2-46ea-ba17-46422f6840d8.png)
 
 ---
 
 * workflow for login
 
-![317A9BCA-47B4-42A2-92E4-AEB0663486A4](https://user-images.githubusercontent.com/15087647/174743155-bdcd9478-d055-4350-9aea-9e1a2cefb0a6.png)
+![login](https://user-images.githubusercontent.com/15087647/177251650-bea0ae76-1e6e-4ad5-9e21-6fd93bb1f9a5.png)
 
 ## Features
 

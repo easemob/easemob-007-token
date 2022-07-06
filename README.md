@@ -96,8 +96,6 @@ Configure the below file with appkey, AppId and AppCert you get from the above s
       
   ```
 
-* Update config params in [ApplicationConfig](./src/main/java/com/easemob/agora/config/ApplicationConfig.java) file.
-
 ## Run
 
 When you finish the configure, you can just run this app server.
@@ -190,7 +188,6 @@ curl -X POST -H 'Content-Type: application/json' 'http://localhost:8080/app/user
 | accessToken     | String    | token                      |
 | expireTimestamp | Long      | timestamp for token expire |
 | easemobUserName | String    | chat user id               |
-| agoraUid        | Integer   | agora uid                  |
 
 **response example:**
 

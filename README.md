@@ -131,7 +131,7 @@ This api is used to register a user for your app. User name and password is used
 **request example:**
 
 ```
-curl -X POST -H 'Content-Type: application/json' 'http://localhost:8080/app/user/register' -d '{"userAccount": "jack","userPassword":"123"}'
+curl -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' 'http://localhost:8080/app/user/register' -d '{"userAccount": "jack","userPassword":"123"}'
 ```
 
 **Response Parameters:**
@@ -144,7 +144,7 @@ curl -X POST -H 'Content-Type: application/json' 'http://localhost:8080/app/user
 
 ```json
 {
-    "code": "RES_OK"
+    "code": 200
 }
 ```
 
@@ -177,7 +177,7 @@ User login on your app server and get a agora token for chat service.
 **request example:**
 
 ```
-curl -X POST -H 'Content-Type: application/json' 'http://localhost:8080/app/user/login' -d '{"userAccount": "jack","userPassword":"123"}'
+curl -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' 'http://localhost:8080/app/user/login' -d '{"userAccount": "jack","userPassword":"123"}'
 ```
 
 **Response Parameters:**
@@ -187,15 +187,15 @@ curl -X POST -H 'Content-Type: application/json' 'http://localhost:8080/app/user
 | code            | String    | response status code       |
 | accessToken     | String    | token                      |
 | expireTimestamp | Long      | timestamp for token expire |
-| easemobUserName | String    | chat user id               |
+| chatUserName | String    | chat user id               |
 
 **response example:**
 
 ```json
 {
-    "code": "RES_OK",
+    "code": 200,
     "accessToken": "xxx",
     "expireTimestamp": 1628245967857,
-    "easemobUserName": "em1792190072"
+    "chatUserName": "jack"
 }
 ```

@@ -18,9 +18,9 @@ When you plan to use agora chat service, you may need mapping your user profile 
 
 ## Features
 
-- App Server support user registration and will create a chat account and map it to the user, will generate an agoraUid at the same time for possible [RTC service](https://docs.agora.io/cn/Voice/landing-page).
-- App Server support user login and generate a token for chat service(via server SDK with aogra appId, appcert, chat account).
-- App Server support store user information with database, which include user ID, user password, chat account(with uuid) and agora Uid.
+- App Server support user registration and will create a chat account and map it to the user.
+- App Server support user login and generate a token for chat service(use aogra appId, appcert, chat user's uuid).
+- App Server support store user information with database, which include account name, acount password, chat username and chat user's uuid.
 
 
 ## Technical
@@ -31,7 +31,7 @@ This project developed based on Spring Boot.
 
 ## Component
 
-* [AgoraTools]([https://docs-im.easemob.com/ccim/rest/javaserversdk#java_server_sdk](https://github.com/AgoraIO/Tools/tree/dev/accesstoken2/DynamicKey/AgoraDynamicKey/java/src/main/java/io/agora))
+* [AgoraTools](https://github.com/AgoraIO/Tools/tree/dev/accesstoken2/DynamicKey/AgoraDynamicKey/java/src/main/java/io/agora)
 * MySQL
 
 ## Prepare
@@ -52,6 +52,9 @@ Configure the below file with appkey, AppId and AppCert you get from the above s
   ```
       ## configure with your own appkey
       application.appkey=xxx
+      
+      ## configure REST API domain
+      application.base.uri=xxx
       
       ## configure with your own appid
       application.agoraAppId=xxx
@@ -78,6 +81,22 @@ Configure the below file with appkey, AppId and AppCert you get from the above s
   ```
 
 * Update config params in [ApplicationConfig](./src/main/java/com/easemob/agora/config/ApplicationConfig.java) file.
+
+## Database
+You need to create a database and a table.
+
+```
+CREATE DATABASE app_server CHARACTER SET utf8mb4;
+	
+CREATE TABLE `app_user_info` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `user_account` varchar(32) NOT NULL COMMENT 'user account',
+  `user_password` varchar(32) DEFAULT NULL COMMENT 'user password',
+  `agora_chat_user_name` varchar(32) NOT NULL COMMENT 'Agora Chat user name',
+  `agora_chat_user_uuid` varchar(36) DEFAULT NULL COMMENT 'Agora Chat user uuid',
+  PRIMARY KEY (`id`,`user_account`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+```
 
 ## Run
 

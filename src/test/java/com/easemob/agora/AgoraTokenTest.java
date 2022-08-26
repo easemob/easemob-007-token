@@ -6,7 +6,7 @@ import org.junit.Test;
 public class AgoraTokenTest {
 
     @Test
-    public void getToken() {
+    public void testGenerateToken() {
         String appId = "";
         String appCert = "";
         int expirePeriod = 86400;
@@ -14,8 +14,8 @@ public class AgoraTokenTest {
         ChatTokenBuilder2 builder = new ChatTokenBuilder2();
 
         // 1. Generate Agora App Token
-        String agoraAppToken = builder.buildAppToken(appId, appCert, expirePeriod);
-        System.out.println("agoraAppToken : " + agoraAppToken);
+//        String agoraAppToken = builder.buildAppToken(appId, appCert, expirePeriod);
+//        System.out.println("agoraAppToken : " + agoraAppToken);
 
         // 2.Get a Chat App token with Agora App Token
         String chatAppToken = "";
@@ -26,7 +26,6 @@ public class AgoraTokenTest {
         // 4.Generate Chat User Token
         String agoraChatUserToken = builder.buildUserToken(appId, appCert, agoraChatUserUuid, expirePeriod);
         System.out.println("agoraChatUserToken : " + agoraChatUserToken);
-
     }
     
 }

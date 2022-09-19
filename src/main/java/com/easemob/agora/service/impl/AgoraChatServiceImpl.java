@@ -144,40 +144,12 @@ public class AgoraChatServiceImpl implements AgoraChatService {
     private String getAgoraChatAppTokenFromCache() {
         try {
             return agoraChatAppTokenCache.get("agora-chat-app-token", () -> {
-                return exchangeToken();
+                return getAgoraAppToken();
             });
         } catch (Exception e) {
             log.error("get Agora Chat app token from cache. error : {}", e.getMessage());
             throw new IllegalArgumentException("Get Agora Chat app token from cache error");
         }
-    }
-
-    /**
-     * Convert the Agora app token to Agora Chat app token
-     * @return Agora Chat app token
-     */
-    private String exchangeToken() {
-        String orgName = appkey.split("#")[0];
-        String appName = appkey.split("#")[1];
-        String url = "http://" + domain + "/" + orgName + "/" + appName + "/token";
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-        headers.setBearerAuth(getAgoraAppToken());
-
-        Map<String, String> body = new HashMap<>();
-        body.put("grant_type", "agora");
-        HttpEntity<Map<String, String>> entity = new HttpEntity<>(body, headers);
-        ResponseEntity<Map> response;
-
-        try {
-            response = restTemplate.exchange(url, HttpMethod.POST, entity, Map.class);
-        } catch (Exception e) {
-            log.error("exchange token. error : {}", e.getMessage());
-            throw new RestClientException("exchange token error ");
-        }
-        return (String) Objects.requireNonNull(response.getBody()).get("access_token");
     }
 
 }

@@ -13,19 +13,15 @@ public class AgoraTokenTest {
 
         ChatTokenBuilder2 builder = new ChatTokenBuilder2();
 
-        // 1. Generate Agora App Token
-//        String agoraAppToken = builder.buildAppToken(appId, appCert, expirePeriod);
-//        System.out.println("agoraAppToken : " + agoraAppToken);
+        // 1. Generate a token with app privileges
+        String tokenWithAppPrivileges = builder.buildAppToken(appId, appCert, expirePeriod);
+        System.out.println("tokenWithAppPrivileges : " + tokenWithAppPrivileges);
 
-        // 2.Get a Chat App token with Agora App Token
-        String chatAppToken = "";
-
-        // 3.Register Chat User and get uuid
+        // 2.Register Agora Chat User And get the UUID
         String agoraChatUserUuid = "";
 
-        // 4.Generate Chat User Token
-        String agoraChatUserToken = builder.buildUserToken(appId, appCert, agoraChatUserUuid, expirePeriod);
-        System.out.println("agoraChatUserToken : " + agoraChatUserToken);
+        // 3.Generate a token with user privileges
+        String tokenWithUserPrivileges = builder.buildUserToken(appId, appCert, agoraChatUserUuid, expirePeriod);
+        System.out.println("tokenWithUserPrivileges : " + tokenWithUserPrivileges);
     }
-    
 }

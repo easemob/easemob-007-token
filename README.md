@@ -105,7 +105,7 @@ When you finish the configure, you can just run this app server.
 
 This api is used to register a user for your app. User name and password is used in this sample project, you can use any other format for your user account ,such as phone number.
 
-**Path:** `http://localhost:8080/app/user/register`
+**Path:** `http://localhost:8080/app/chat/user/register`
 
 **HTTP Method:** `POST`
 
@@ -152,7 +152,7 @@ curl -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' '
 
 User login on your app server and get a agora token for chat service.
 
-**Path:** `http://localhost:8080/app/user/login`
+**Path:** `http://localhost:8080/app/chat/user/login`
 
 **HTTP Method:** `POST`
 

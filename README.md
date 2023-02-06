@@ -12,8 +12,6 @@
 * 获取 AgoraChat App Token
 * 获取 AgoraChat User Token
 
-Demo 核心功能位置在 [这里](./src/main/java/com/agora/chat/token/io/agora/media)。
-
 此 Demo 只是简单演示通过请求到自己服务器上获取 AgoraChat Token，所以没有对硬件、防火墙之类的限制。
 
 Demo 具体使用介绍请参考此文档：

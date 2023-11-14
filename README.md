@@ -5,7 +5,7 @@
 此 Demo 为 java 项目。
 
 ### 开发环境：
-* JDK11
+* JDK1.8
 * Spring Boot(2.4.3)
 
 ### 功能：

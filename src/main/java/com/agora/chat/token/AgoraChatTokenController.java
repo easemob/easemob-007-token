@@ -3,14 +3,10 @@ package com.agora.chat.token;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import io.agora.chat.ChatTokenBuilder2;
-import io.agora.media.AccessToken2;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
@@ -48,8 +44,8 @@ public class AgoraChatTokenController {
 
     /**
      *
-     * 获取 app 权限 token
-     * @return app 权限 token
+     * Get app privilege token
+     * @return app privilege token
      */
     @GetMapping("/chat/app/token")
     public String getAppToken() {
@@ -58,23 +54,19 @@ public class AgoraChatTokenController {
             return "appid or appcert is not empty";
         }
 
-        return getAgoraAppToken();
+        return generateAgoraAppToken();
     }
 
     /**
-     * 获取 user 权限 token
-     * @param chatUserName chat 用户名
-     * @return user 权限 token
+     * Get user privilege token
+     * @param chatUserName chat username
+     * @return user privilege token
      */
     @GetMapping("/chat/user/{chatUserName}/token")
-    public String getChatToken(@PathVariable String chatUserName) {
+    public String getUserToken(@PathVariable String chatUserName) {
 
         if (!StringUtils.hasText(appid) || !StringUtils.hasText(appcert)) {
             return "appid or appcert is not empty";
-        }
-
-        if (!StringUtils.hasText(appkey) || !StringUtils.hasText(domain)) {
-            return "appkey or domain is not empty";
         }
 
         if (!appkey.contains("#")) {
@@ -85,29 +77,20 @@ public class AgoraChatTokenController {
             return "chatUserName is not empty";
         }
 
-        String chatUserUuid = getChatUserUuid(chatUserName);
-
-        if (chatUserUuid == null) {
-            chatUserUuid = registerChatUser(chatUserName);
-        }
-
         ChatTokenBuilder2 builder = new ChatTokenBuilder2();
-        return builder.buildUserToken(appid, appcert, chatUserUuid, expirePeriod);
+        return builder.buildUserToken(appid, appcert, chatUserName, expirePeriod);
     }
 
     /**
-     * 根据用户名和密码在 agora chat 服务器上注册一个 user，并获取到此用户的 uuid 用于生成 user 权限 token
-     * 这里密码默认使用 "123"
+     * Register users on the Agora Chat server based on the username.
      *
-     * @param chatUserName 用户名
-     * @return uuid
+     * @param registerChatUserRequest register users request
      */
-    private String registerChatUser(String chatUserName) {
+    @PostMapping("/chat/user/register")
+    public void registerChatUser(@RequestBody RegisterChatUserRequest registerChatUserRequest) {
 
         String orgName = appkey.split("#")[0];
-
         String appName = appkey.split("#")[1];
-
         String url = "http://" + domain + "/" + orgName + "/" + appName + "/users";
 
         HttpHeaders headers = new HttpHeaders();
@@ -115,68 +98,34 @@ public class AgoraChatTokenController {
         headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
         headers.setBearerAuth(getAgoraChatAppTokenFromCache());
 
-        Map<String, String> body = new HashMap<>();
-        body.put("username", chatUserName);
-        body.put("password", "123");
+        List<String> chatUserNameList = registerChatUserRequest.getUsernames();
+        if (chatUserNameList == null || chatUserNameList.isEmpty()) {
+            throw new IllegalArgumentException("register chat usernames is not empty");
+        }
 
-        HttpEntity<Map<String, String>> entity = new HttpEntity<>(body, headers);
+        List<Map<String, String>> requestBody = new ArrayList<>();
+        chatUserNameList.forEach(chatUserName -> {
+            Map<String, String> chatUserNameEntity = new HashMap<>();
+            chatUserNameEntity.put("username", chatUserName);
+            requestBody.add(chatUserNameEntity);
+        });
 
-        ResponseEntity<Map> response;
+        HttpEntity<List<Map<String, String>>> entity = new HttpEntity<>(requestBody, headers);
 
         try {
-            response = restTemplate.exchange(url, HttpMethod.POST, entity, Map.class);
+            ResponseEntity response = restTemplate.exchange(url, HttpMethod.POST, entity, Map.class);
+            System.out.println("response : " + response);
         } catch (Exception e) {
             throw new RestClientException("register chat user error : " + e.getMessage());
         }
-
-        List<Map<String, Object>> results = (List<Map<String, Object>>) response.getBody().get("entities");
-
-        return (String) results.get(0).get("uuid");
     }
 
     /**
-     * 根据用户名到 agora chat 服务器上获取此用户，如用户存在则获取此用户的 uuid，用户不存在返回 null
-     *
-     * @param chatUserName 用户名
-     * @return uuid
-     */
-    private String getChatUserUuid(String chatUserName) {
-
-        String orgName = appkey.split("#")[0];
-
-        String appName = appkey.split("#")[1];
-
-        String url = "http://" + domain + "/" + orgName + "/" + appName + "/users/" + chatUserName;
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-        headers.setBearerAuth(getAgoraChatAppTokenFromCache());
-
-        HttpEntity<Map<String, String>> entity = new HttpEntity<>(null, headers);
-
-        ResponseEntity<Map> responseEntity = null;
-
-        try {
-            responseEntity = restTemplate.exchange(url, HttpMethod.GET, entity, Map.class);
-        } catch (Exception e) {
-            System.out.println("get chat user error : " + e.getMessage());
-        }
-
-        if (responseEntity != null) {
-
-            List<Map<String, Object>> results = (List<Map<String, Object>>) responseEntity.getBody().get("entities");
-
-            return (String) results.get(0).get("uuid");
-        }
-
-        return null;
-    }
-
-    /**
-     * 生成 Agora Chat app token
+     * Generate agora chat app token
      * @return Agora Chat app token
      */
-    private String getAgoraAppToken() {
+    private String generateAgoraAppToken() {
+
         if (!StringUtils.hasText(appid) || !StringUtils.hasText(appcert)) {
             throw new IllegalArgumentException("appid or appcert is not empty");
         }
@@ -187,13 +136,14 @@ public class AgoraChatTokenController {
     }
 
     /**
-     * 从缓存中获取 Agora Chat App Token
+     * Get agora chat app token from cache
      * @return Agora Chat App Token
      */
     private String getAgoraChatAppTokenFromCache() {
+
         try {
             return agoraChatAppTokenCache.get("agora-chat-app-token", () -> {
-                return getAgoraAppToken();
+                return generateAgoraAppToken();
             });
         } catch (Exception e) {
             throw new IllegalArgumentException("Get Agora Chat app token from cache error");

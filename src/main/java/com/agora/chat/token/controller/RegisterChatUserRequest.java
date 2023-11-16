@@ -1,4 +1,4 @@
-package com.agora.chat.token;
+package com.agora.chat.token.controller;
 
 import java.util.List;
 

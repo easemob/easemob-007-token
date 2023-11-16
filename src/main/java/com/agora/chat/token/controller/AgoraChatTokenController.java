@@ -1,4 +1,4 @@
-package com.agora.chat.token;
+package com.agora.chat.token.controller;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
@@ -48,13 +48,14 @@ public class AgoraChatTokenController {
      * @return app privilege token
      */
     @GetMapping("/chat/app/token")
-    public String getAppToken() {
+    public ResponseEntity getAppToken() {
 
         if (!StringUtils.hasText(appid) || !StringUtils.hasText(appcert)) {
-            return "appid or appcert is not empty";
+            throw new IllegalArgumentException("appid or appcert is not empty");
         }
 
-        return generateAgoraAppToken();
+        String appToken = generateAgoraAppToken();
+        return ResponseEntity.ok(new AgoraChatTokenResponse(appToken));
     }
 
     /**
@@ -63,22 +64,19 @@ public class AgoraChatTokenController {
      * @return user privilege token
      */
     @GetMapping("/chat/user/{chatUserName}/token")
-    public String getUserToken(@PathVariable String chatUserName) {
+    public ResponseEntity getUserToken(@PathVariable String chatUserName) {
 
         if (!StringUtils.hasText(appid) || !StringUtils.hasText(appcert)) {
-            return "appid or appcert is not empty";
-        }
-
-        if (!appkey.contains("#")) {
-            return "appkey is illegal";
+            throw new IllegalArgumentException("appid or appcert is not empty");
         }
 
         if (!StringUtils.hasText(chatUserName)) {
-            return "chatUserName is not empty";
+            throw new IllegalArgumentException("chatUserName is not empty");
         }
 
         ChatTokenBuilder2 builder = new ChatTokenBuilder2();
-        return builder.buildUserToken(appid, appcert, chatUserName, expirePeriod);
+        String userToken = builder.buildUserToken(appid, appcert, chatUserName, expirePeriod);
+        return ResponseEntity.ok(new AgoraChatTokenResponse(userToken));
     }
 
     /**
@@ -87,7 +85,20 @@ public class AgoraChatTokenController {
      * @param registerChatUserRequest register users request
      */
     @PostMapping("/chat/user/register")
-    public void registerChatUser(@RequestBody RegisterChatUserRequest registerChatUserRequest) {
+    public ResponseEntity registerChatUser(@RequestBody RegisterChatUserRequest registerChatUserRequest) {
+
+        if (!StringUtils.hasText(appkey)) {
+            throw new IllegalArgumentException("appkey is not empty");
+        }
+
+        if (!appkey.contains("#")) {
+            throw new IllegalArgumentException("appkey is illegal");
+        }
+
+        List<String> chatUserNameList = registerChatUserRequest.getUsernames();
+        if (chatUserNameList == null || chatUserNameList.isEmpty()) {
+            throw new IllegalArgumentException("register chat usernames is not empty");
+        }
 
         String orgName = appkey.split("#")[0];
         String appName = appkey.split("#")[1];
@@ -97,11 +108,6 @@ public class AgoraChatTokenController {
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
         headers.setBearerAuth(getAgoraChatAppTokenFromCache());
-
-        List<String> chatUserNameList = registerChatUserRequest.getUsernames();
-        if (chatUserNameList == null || chatUserNameList.isEmpty()) {
-            throw new IllegalArgumentException("register chat usernames is not empty");
-        }
 
         List<Map<String, String>> requestBody = new ArrayList<>();
         chatUserNameList.forEach(chatUserName -> {
@@ -113,11 +119,12 @@ public class AgoraChatTokenController {
         HttpEntity<List<Map<String, String>>> entity = new HttpEntity<>(requestBody, headers);
 
         try {
-            ResponseEntity response = restTemplate.exchange(url, HttpMethod.POST, entity, Map.class);
-            System.out.println("response : " + response);
+            restTemplate.exchange(url, HttpMethod.POST, entity, Map.class);
         } catch (Exception e) {
             throw new RestClientException("register chat user error : " + e.getMessage());
         }
+
+        return ResponseEntity.ok(new AgoraChatTokenResponse("register successful"));
     }
 
     /**
